@@ -1,0 +1,52 @@
+name: Build Kernel
+
+on:
+  push:
+  workflow_dispatch:
+env: 
+  CI: false
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@v10
+      with:
+        swap-size-mb: 32768
+
+    - name: Checkout main repository
+      uses: actions/checkout@v4.1.7
+      with:
+        repository: ahmedmoselhi/SM-A155F_15_Opensource
+
+    - name: Sync Anykernel3
+      run: |
+        git clone --depth=1 --branch A15 https://github.com/ahmedmoselhi/AnyKernel3 AnyKernel3
+
+    - name: Set up build environment
+      run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential bc curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev \
+                                  lftp zstd wget libfl-dev libarchive-tools
+
+    - name: Build kernel
+      env: 
+        CI: false
+      run: |
+        cd Kernel
+        chmod a+x build_kernel.sh
+        bash build_kernel.sh
+
+    - name: Pack AnyKernel3 ZIP
+      run: |
+        cp -f Kernel/out/target/product/a15/obj/KERNEL_OBJ/kernel-5.10/arch/arm64/boot/Image.gz ./AnyKernel3/
+        cd AnyKernel3/
+        rm -rf .git .github README.md
+        zip -r9 a155f-kernel.zip *
+
+    - name: Upload AnyKernel3 ZIP
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: a155f-kernel.zip
+        path: AnyKernel3/a155f-kernel.zip
