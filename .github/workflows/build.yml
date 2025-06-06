@@ -24,11 +24,16 @@ jobs:
       run: |
         git clone --depth=1 --branch A15 https://github.com/ahmedmoselhi/AnyKernel3 AnyKernel3
 
-    - name: Set up build environment
+    - name: Set up build environment  
       run: |
           sudo apt-get update
           sudo apt-get install -y build-essential bc curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev \
                                   lftp zstd wget libfl-dev libarchive-tools
+                                  
+    - name: Adjust python version
+      uses: MatteoH2O1999/setup-python@v5
+      with:
+        python-version: '2.7'                                  
 
     - name: Build kernel
       env: 
@@ -50,3 +55,22 @@ jobs:
       with:
         name: a155f-kernel.zip
         path: AnyKernel3/a155f-kernel.zip
+ 
+  build-release:
+    needs: [ build ]
+    name: "Build Release"
+    runs-on: "ubuntu-24.04"
+    steps:
+      - uses: actions/download-artifact@v4.3.0
+        with:
+          path: AnyKernel3
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: AnyKernel3/
+
+      - name: Upload binaries to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            AnyKernel3/*.zip
