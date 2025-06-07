@@ -12,4 +12,4 @@ export DIST_DIR="../out/target/product/a15/obj/KERNEL_OBJ"
 export BUILD_CONFIG="../out/target/product/a15/obj/KERNEL_OBJ/build.config"
 
 cd ../kernel
-./build/build.sh
+LTO=thin ./build/build.sh
