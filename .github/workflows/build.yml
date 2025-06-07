@@ -76,4 +76,4 @@ jobs:
           prerelease: true
           title: "Development Build"        
           files: |
-            AnyKernel3/*.zip
+            /home/runner/work/SM-A155F_15_Opensource/SM-A155F_15_Opensource/AnyKernel3/a155f-kernel.zip
