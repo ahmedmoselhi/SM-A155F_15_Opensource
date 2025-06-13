@@ -1,35 +1,51 @@
-########################################################################################################
-1. How to Build
-   - get Toolchain
-      Get the proper toolchain packages from AOSP or CodeSourcery or ETC.
-      (Download link : https://opensource.samsung.com/uploadSearch?searchValue=toolchain)
-     Please unzip the toolchain file in the path where build_kernel.sh is located.
-     
-      kernel/prebuilts/ , 
-      kernel/prebuilts-master/, 
-      prebuilts/
+How to build Module for Platform
+- It is only for modules are needed to using Android build system.
+- Please check its own install information under its folder for other module.
 
-   - Set Build Environment and Export Target Config
-      $ cd kernel-5.10
-      $ python scripts/gen_build_config.py --kernel-defconfig a15_00_defconfig
-                                            --kernel-defconfig-overlays "entry_level.config"
-                                            -m user -o ../out/target/product/a15/obj/KERNEL_OBJ/build.config
+[Step to build]
+1. Get android open source.
+    : version info - Android 15.0
+    ( Download site : http://source.android.com )
 
-      $ export ARCH=arm64
-      $ export CROSS_COMPILE="aarch64-linux-gnu-"
-      $ export CROSS_COMPILE_COMPAT="arm-linux-gnueabi-"
-      $ export OUT_DIR="../out/target/product/a15/obj/KERNEL_OBJ"
-      $ export DIST_DIR="../out/target/product/a15/obj/KERNEL_OBJ"
-      $ export BUILD_CONFIG="../out/target/product/a15/obj/KERNEL_OBJ/build.config"
+2. Copy module that you want to build - to original android open source
+   If same module exist in android open source, you should replace it. (no overwrite)
+   
+  # It is possible to build all modules at once.
+  
+3. You should add module name to 'PRODUCT_PACKAGES' in 'build/make/target/product/base_system.mk' as following case.
+	case 1) libexifa : should add 'libexifa.camera.samsung' to PRODUCT_PACKAGES
+	case 2) libjpega : should add 'libjpega.camera.samsung' to PRODUCT_PACKAGES
+	
 
-   - To Build
-      $ cd ../kernel
-      $ ./build/build.sh
+ex.) [build/make/target/product/base_system.mk] - add all module name for case 1 ~ 2 at once
+    
+# libexifa
+PRODUCT_PACKAGES += \
+    libexifa.camera.samsung
+    
+# libjpega
+PRODUCT_PACKAGES += \
+    libjpega.camera.samsung
+    
+4. To build files in the 'ztd/bpf_progs' folder, please add each module name to the 'required' property of 'system/bpf/loader/Android.bp' 
+   
+5. excute build command
+   ./build_64bit.sh
 
-2. Output Files
-   - Kernel : out/target/product/a15/obj/KERNEL_OBJ/kernel-5.10/arch/arm64/boot/Image.gz
-   - module : out/target/product/a15/obj/KERNEL_OBJ/*.ko
-
-3. How to Clean
-   $ make clean
-########################################################################################################
+6. Note : 
+   To download the source code of S/W listed below, please visit http://opensource.samsung.com and find "Mobile -> Mobile Application" menu, 
+   and then, you will be able to download what you want. 
+   You might save time in finding the right one by making use of the search keyword below. 
+	- SamsungConnect.apk : "SamsungConnect"
+	- SamsungCalendar.apk : "SamsungCalendar"
+	- SamsungPass.apk : "SamsungPass"
+	- VoiceNote_5.0.apk : "Voice Recorder"
+	- SamsungMessages.apk : "Messaging"
+	- Fmm.apk : "FMM"
+	- AREmoji.apk : "AREmoji"
+	- MdecService.apk : "MdecService"
+	- SamsungCamera.apk : "Camera"
+	- HybridRadio.apk : "FMRadio"
+	- Notes40_Removable.apk : "Samsung Notes"
+	- SBrowser.apk : "SBrowser"
+	- AvatarEmojiSticker.apk : "AvatarEmojiSticker"
