@@ -1,8 +1,9 @@
 #!/bin/bash
 
-export PATH=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin:$PATH
-export CROSS_COMPILE=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin/aarch64-linux-gnu-
-export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin/clang
+export PATH=$(pwd)/prebuilts/clang/host/linux-x86/clang-r416183b/bin:$PATH
+export PATH=$(pwd)/prebuilts/build-tools/linux-x86/bin:$PATH
+export CROSS_COMPILE=$(pwd)/prebuilts/clang/host/linux-x86/clang-r416183b/bin/aarch64-linux-gnu-
+export CC=$(pwd)/prebuilts/clang/host/linux-x86/clang-r416183b/bin/clang
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
 export PLATFORM_VERSION=12
