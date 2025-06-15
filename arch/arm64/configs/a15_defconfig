@@ -813,7 +813,7 @@ CONFIG_MODULE_SCMVERSION=y
 # CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS is not set
 # CONFIG_UNUSED_SYMBOLS is not set
 CONFIG_TRIM_UNUSED_KSYMS=y
-CONFIG_UNUSED_KSYMS_WHITELIST="/home/dpi/qb5_8814/workspace/P4_1716/android/out/target/product/a15/obj/KERNEL_OBJ/kernel-5.10/abi_symbollist.raw"
+CONFIG_UNUSED_KSYMS_WHITELIST=""
 CONFIG_MODULES_TREE_LOOKUP=y
 CONFIG_BLOCK=y
 CONFIG_BLK_RQ_ALLOC_TIME=y
@@ -2439,7 +2439,7 @@ CONFIG_MTK_TASK_TURBO=m
 # Config File
 #
 CONFIG_BUILD_CONFIG_FILE="build.config.mtk.aarch64"
-CONFIG_ABI_MONITOR=y
+#CONFIG_ABI_MONITOR is not set
 CONFIG_EXT_MODULES="../vendor/mediatek/kernel_modules/connectivity/common ../vendor/mediatek/kernel_modules/connectivity/conninfra ../vendor/mediatek/kernel_modules/connectivity/connfem ../vendor/mediatek/kernel_modules/connectivity/gps/gps_stp ../vendor/mediatek/kernel_modules/connectivity/gps/data_link/plat/v010 ../vendor/mediatek/kernel_modules/connectivity/gps/data_link/plat/v030 ../vendor/mediatek/kernel_modules/connectivity/gps/data_link/plat/v050 ../vendor/mediatek/kernel_modules/connectivity/gps/gps_pwr ../vendor/mediatek/kernel_modules/connectivity/gps/gps_scp ../vendor/mediatek/kernel_modules/gpu ../vendor/mediatek/kernel_modules/connectivity/fmradio"
 # end of Config File
 
