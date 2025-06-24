@@ -44,6 +44,7 @@ jobs:
       env: 
         CI: false
       run: |
+        git submodule update --init --recursive
         bash build_kernel.sh
         
     - name: Pack AnyKernel3 ZIP
@@ -53,11 +54,13 @@ jobs:
         rm -rf .git .github README.md
         zip -r9 a155f-kernel.zip *
         
-    - name: Upload AnyKernel3 ZIP
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4.3.4
       with:
-        name: a155f-kernel.zip
-        path: AnyKernel3/a155f-kernel.zip
+        name: artifacts
+        path: |
+           AnyKernel3/a155f-kernel.zip
+           ksu_patched/boot.img
  
   build-release:
     needs: [ build ]
@@ -67,11 +70,7 @@ jobs:
     
       - uses: actions/download-artifact@v4.3.0
         with:
-          path: AnyKernel3
-
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: AnyKernel3/
+          name: artifacts
 
       - name: Upload binaries to release
         uses: "diillson/auto-release@latest"
@@ -82,3 +81,4 @@ jobs:
           title: "Development Build"        
           files: |
             /home/runner/work/SM-A155F_15_Opensource/SM-A155F_15_Opensource/AnyKernel3/a155f-kernel.zip
+            /home/runner/work/SM-A155F_15_Opensource/SM-A155F_15_Opensource/ksu_patched/boot.img
