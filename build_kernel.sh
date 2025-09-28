@@ -13,7 +13,7 @@ rm kernel
 #do ksun
 cd ../Kernel/kernel-5.10/
 find . -type f ! -perm -u=w -exec chmod u+w {} +
-curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s v1.0.9
+curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s v1.1.1
 
 #do susfs stuff
 if [ ! -f "./scope_min_manual_hooks_v1.4.patch" ]; then
